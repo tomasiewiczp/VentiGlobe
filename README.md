@@ -1,53 +1,53 @@
 # VentiGlobe
 
-Aplikacja do przewidywania pogody i rekomendacji miejsc podróży wykorzystująca uczenie maszynowe.
+A weather prediction and travel destination recommendation application using machine learning.
 
-## Funkcjonalności
+## Features
 
-- Przewidywanie pogody dla wybranego miasta i daty
-- Rekomendacje miejsc podróży na podstawie preferencji pogodowych
-- Interaktywna mapa z wyszukiwarką miejsc
+- Weather prediction for selected city and date
+- Travel destination recommendations based on weather preferences
+- Interactive map with location search
 
-## Technologie
+## Technologies
 
 - Backend: Python (FastAPI)
 - Frontend: React.js
-- Baza danych: PostgreSQL
+- Database: PostgreSQL
 - ML: scikit-learn
-- Konteneryzacja: Docker & Docker Compose
+- Containerization: Docker & Docker Compose
 
-## Instalacja
+## Installation
 
-1. Sklonuj repozytorium:
+1. Clone the repository:
 ```bash
 git clone https://github.com/tomasiewiczp/VentiGlobe.git
 cd VentiGlobe
 ```
 
-2. Utwórz i aktywuj virtualenv:
+2. Create and activate virtualenv:
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # Linux/Mac
-# lub
+# or
 .\venv\Scripts\activate  # Windows
 ```
 
-3. Zainstaluj zależności:
+3. Install dependencies:
 ```bash
 pip install -r backend/requirements.txt
 ```
 
-4. Uruchom aplikację:
+4. Run the application:
 ```bash
 docker-compose up
 ```
 
-## Rozwój
+## Development
 
-- Backend dostępny na: http://localhost:8000
-- Frontend dostępny na: http://localhost:3000
-- API dokumentacja: http://localhost:8000/docs
+- Backend available at: http://localhost:8000
+- Frontend available at: http://localhost:3000
+- API documentation: http://localhost:8000/docs
 
-## Licencja
+## License
 
 MIT 
