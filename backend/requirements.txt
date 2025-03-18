@@ -1,0 +1,11 @@
+fastapi==0.115.11
+uvicorn==0.34.0
+sqlalchemy==2.0.39
+psycopg2-binary==2.9.9
+python-dotenv==1.0.1
+pytest==8.3.5
+pydantic==2.10.6
+requests==2.31.0
+scikit-learn==1.4.1
+pandas==2.2.1
+numpy==1.26.4 
