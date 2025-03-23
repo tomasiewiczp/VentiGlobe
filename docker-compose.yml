@@ -2,36 +2,35 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8001:8001"
     volumes:
       - ./backend:/app
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/ventiglobe
-    depends_on:
-      - db
+      - ML_SERVICE_URL=http://ml_service:8002
+    networks:
+      - ventiglobe-network
 
-  frontend:
-    build: ./frontend
+  ml_service:
+    build: 
+      context: ./ml_service
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "8002:8002"
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    depends_on:
-      - backend
-
-  db:
-    image: postgres:15
-    ports:
-      - "5432:5432"
+      - ./ml_service:/app
+      - ./ml_data:/app/data
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=ventiglobe
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - BACKEND_URL=http://backend:8001
+    networks:
+      - ventiglobe-network
 
 volumes:
-  postgres_data: 
+  postgres_data:
+
+networks:
+  ventiglobe-network:
+    driver: bridge 
