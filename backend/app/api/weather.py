@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 from typing import List, Dict
-from ..services.weather_service import WeatherService
+import httpx
 
 router = APIRouter()
+
+ML_SERVICE_URL = "http://ml_service:8002"  # Wewnętrzny adres w sieci dockerowej
 
 @router.get("/forecast/{city_name}")
 async def get_weather_forecast(city_name: str, date: str) -> Dict:
@@ -71,4 +73,22 @@ async def get_historical_weather(
         return historical_data
         
     except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD") 
+        raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
+
+@router.get("/{city}")
+async def get_weather_prediction(city: str, date: str = None) -> Dict:
+    """
+    Pobiera predykcję pogody dla danego miasta z serwisu ML.
+    """
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"{ML_SERVICE_URL}/predict/{city}",
+                params={"date": date} if date else None
+            )
+            response.raise_for_status()
+            return response.json()
+    except httpx.HTTPError as e:
+        raise HTTPException(status_code=500, detail=f"Błąd podczas komunikacji z serwisem ML: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) 
